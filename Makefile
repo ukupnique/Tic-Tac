@@ -2,7 +2,7 @@ PYTHON = python3
 PIP = pip3
 VENV = venv
 BIN = $(VENV)/bin
-REQ = ../requirements.txt
+REQ = ./requirements.txt
 TEST_DIR = tests
 
 all: run
