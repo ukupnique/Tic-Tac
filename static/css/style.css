@@ -1,0 +1,103 @@
+:root {
+    --ios-bg: #f2f2f7;
+    --ios-glass: rgba(255, 255, 255, 0.75);
+    --ios-accent-blue: #007aff;
+    --ios-accent-red: #ff3b30;
+    --cell-size: 100px;
+    --cell-empty: rgba(0, 0, 0, 0.03); 
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #d2e3fc 0%, #ffffff 100%);
+    margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh;
+    user-select: none; -webkit-user-select: none;
+    overflow: hidden;
+}
+
+.perspective-container {
+    perspective: 1000px;
+}
+
+.game-wrapper {
+    background: var(--ios-glass);
+    backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+    padding: 50px; border-radius: 45px; 
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow: 0 30px 70px rgba(0,0,0,0.08); 
+    text-align: center;
+    transition: transform 0.1s ease-out; 
+    position: relative; 
+}
+
+h1 { font-weight: 800; letter-spacing: -1.5px; margin-bottom: 5px; font-size: 2.5rem;}
+.status { color: #8e8e93; margin-bottom: 35px; font-weight: 500; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px;}
+
+.board {
+    display: grid; grid-template-columns: repeat(3, var(--cell-size));
+    gap: 15px; margin-bottom: 40px; padding: 10px;
+    position: relative; 
+}
+
+.cell {
+    width: var(--cell-size); height: var(--cell-size);
+    background: var(--cell-empty); border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative; font-size: 3.2rem; font-weight: 700;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.01);
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+.cell:hover:not(.taken) { 
+    background: rgba(255, 255, 255, 0.9); 
+    transform: scale(1.04) translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.06);
+}
+
+.cell.ai-thinking {
+    animation: aiPulse 1s infinite alternate;
+    background: rgba(0, 122, 255, 0.1);
+}
+
+@keyframes aiPulse {
+    0% { box-shadow: 0 0 5px rgba(0, 122, 255, 0.2); border-color: rgba(0, 122, 255, 0.1); }
+    100% { box-shadow: 0 0 20px rgba(0, 122, 255, 0.4); border-color: rgba(0, 122, 255, 0.3); }
+}
+
+.cell.taken { cursor: default; background: rgba(255, 255, 255, 0.3); }
+.cell.x { color: var(--ios-accent-red); animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-shadow: 0 0 15px rgba(255, 59, 48, 0.3); }
+.cell.o { color: var(--ios-accent-blue); animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-shadow: 0 0 15px rgba(0, 122, 255, 0.3); }
+
+@keyframes pop {
+    0% { transform: scale(0.6); opacity: 0; }
+    80% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.winning-line {
+    position: absolute;
+    background: white; 
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 10;
+    box-shadow: 0 0 20px white, 0 0 35px white;
+}
+
+.winning-line.x-win { background: var(--ios-accent-red); box-shadow: 0 0 20px var(--ios-accent-red), 0 0 35px var(--ios-accent-red); }
+.winning-line.o-win { background: var(--ios-accent-blue); box-shadow: 0 0 20px var(--ios-accent-blue), 0 0 35px var(--ios-accent-blue); }
+
+.winning-line.active {
+    opacity: 1;
+}
+
+.btn-primary {
+    background: var(--ios-accent-blue); color: white; border: none;
+    padding: 18px 45px; border-radius: 22px; font-size: 1rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+    box-shadow: 0 10px 20px rgba(0, 122, 255, 0.25);
+}
+
+.btn-primary:hover { box-shadow: 0 15px 30px rgba(0, 122, 255, 0.35); transform: translateY(-1px); }
+.btn-primary:active { transform: scale(0.96); filter: brightness(0.95); }

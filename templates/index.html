@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="game-wrapper">
+    <h1>Tic-Tac-Toe</h1>
+    <div class="status" id="status-bar">Начните новую сессию</div>
+    
+    <div class="board" id="game-board">
+        </div>
+
+    <div class="controls">
+        <button class="btn-primary" onclick="createNewGame()">Новая игра</button>
+    </div>
+</div>
+{% endblock %}
